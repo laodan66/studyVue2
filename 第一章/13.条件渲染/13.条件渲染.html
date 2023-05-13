@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>{{n}}</h1>
+        <button @click="n++">点我N+1</button>
+        <button @click="n = 0">重置</button>
+        <!-- v-show调整的是display:none 不会破坏dom树 -->
+        <!-- <h1 v-show="n === 1">{{frameArr[0]}}</h1>
+        <h1 v-show="n === 2">{{frameArr[1]}}</h1>
+        <h1 v-show="n === 3">{{frameArr[2]}}</h1> -->
+
+
+        <!-- v-if可以配合v-else-if v-else使用  会导致节点不存在于dom 会破坏dom树 且不可被其他元素打断-->
+        <h1 v-if="n === 1">{{frameArr[0]}}</h1>
+        <h1 v-else-if="n === 2">{{frameArr[1]}}</h1>
+        <h1 v-else-if="n === 3">{{frameArr[2]}}</h1>
+        <h1 v-else-if="n !== 0">无</h1>
+        <br><br><br><br>
+        <hr>
+
+        <!-- 可以结合template标签 使用v-if(只能) -->
+        <h1>当N是偶数且不是0时显示'Angular', 'React', 'Vue'</h1>
+        <template v-if="n % 2 === 0&& n !== 0">
+            <h1>{{frameArr[0]}}</h1>
+            <h1>{{frameArr[1]}}</h1>
+            <h1>{{frameArr[2]}}</h1>
+        </template>
+    </div>
+
+
+    <script>
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+                n: 0,
+                frameArr: ['Angular', 'React', 'Vue']
+            }
+        });
+    </script>
+</body>
+
+</html>

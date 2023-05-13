@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新学生信息</title>
+    <script src="../Vue/vue.js"></script>
+    <style>
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <h1>学生信息</h1>
+        <button @click.once="userInfo.age++">年龄+1岁</button><br>
+        <button @click.once="addSex">添加性别属性，默认值：男</button><br>
+        <button @click.once="userInfo.sex === '男'? userInfo.sex = '女': userInfo.sex = '男'">修改性别</button><br>
+        <button @click.once="addFriendAsFirst">在列表首位添加一个朋友</button><br>
+        <button @click.once="updateFriendNameOfFirst">修改第一个朋友的名字为：张三</button><br>
+        <button @click.once="addHobby">添加一个爱好</button><br>
+        <button @click.once="updateHobbyOfFirst">修改第一个爱好为：开车</button>
+        <h2>姓名：{{userInfo.name}}</h2>
+        <h2>年龄：{{userInfo.age}}</h2>
+        <h2 v-show="userInfo.sex">性别：{{userInfo.sex}}</h2>
+        <h2>爱好：</h2>
+        <ul>
+            <li v-for="(h, index) in userInfo.hobby" :key="index">
+                {{h}}
+            </li>
+        </ul>
+        <h2>朋友们：</h2>
+        <ul>
+            <li v-for="(f, index) in userInfo.friends" :key="index">
+                {{f.name}}--{{f.age}}
+            </li>
+        </ul>
+    </div>
+
+
+    <script>
+        Vue.config.productionTip = false;
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                userInfo: {
+                    name: 'tom',
+                    age: 18,
+                    hobby: ['抽烟', '喝酒', '烫头'],
+                    friends: [
+                        { name: 'jack', age: 70 },
+                        { name: 'jerry', age: 35 },
+                        { name: 'tony', age: 36 }
+                    ]
+                }
+            },
+            methods: {
+                addSex() {
+                    // Vue.set(this.userInfo,'sex', '男');
+                    this.$set(this.userInfo, 'sex', '男');
+                },
+                addFriendAsFirst() {
+                    this.userInfo.friends.unshift({ name: '李四', age: 100 });
+                },
+                updateFriendNameOfFirst() {
+                    // this.userInfo.friends[0].name = '张三';
+                    this.userInfo.friends.splice(0, 1, { name: '张三', age: 200 });
+                },
+                addHobby() {
+                    this.userInfo.hobby.push('学习');
+                },
+                updateHobbyOfFirst() {
+                    this.userInfo.hobby.splice(0, 1, '开车');
+                }
+    
+            }
+        });
+    </script>
+</body>
+
+
+</html>

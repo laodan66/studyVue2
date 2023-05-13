@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="root">
+        <h1>今天天气{{info}}</h1>
+        <!-- 可以写一些简单语句，但不要多 -->
+        <button @click="isHot = !isHot">点击切换天气</button>
+        <!-- <button @click="changeWeather">点击切换天气</button> -->
+
+        <hr>
+        <p>{{numbers.a}}</p><button @click="numbers.a++">a++</button>
+        <p>{{numbers.b}}</p><button @click="numbers.b++">b++</button>
+        <p>{{nums.msg}}</p><button @click="nums.msg++">msg++</button>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                isHot:true,
+                numbers: {
+                    a:1,
+                    b:1
+                },
+                nums: {
+                    msg:1
+                }
+            },
+            computed: { 
+                // 计算属性 显示isHot代表的中文
+                info() {
+                    return this.isHot == true ? '炎热' : '凉爽';
+                }
+            },
+            methods: {
+                // 方法:切换isHot的值
+                changeWeather() {
+                    this.isHot = !this.isHot;
+                },
+                testHandler(a) {
+                    alert('通过监听器调用了，methods中的testHandler()方法，但是不能传参数');
+                }
+            },
+            watch: {
+                // 侦听器 监听器 监听已存在的属性变化 变化后自动执行
+                isHot: {
+                    immediate: false, // 属性为布尔值，默认状态为false 即是否在初始化时调用handler
+                    handler(newValue, oldValue) {
+                        console.log("监视器被执行了","新值为：" + newValue, "旧值为：" + oldValue);
+                    }
+                },
+                // 监视器默认不监视对象中的深层数据，只监视对象指向的地址是否变化
+                // 对象中的内容 监视方法1
+                /* 'numbers.a': {
+                    handler() {
+                        console.log("numbers中的a发生了变化");
+                    }
+                },
+                'numbers.b': {
+                    handler() {
+                        console.log("numbers中的b发生了变化");
+                    }
+                } */
+
+                // 对象中的内容 监视方法2开启深度监视 deep=true 可以监视对象中的每一个数据的变化
+                numbers: {
+                    // 开启深度监视
+                    deep: true,
+                    handler() {
+                        console.log("numbers中的内容被改变");
+                    }
+                },
+                nums: {
+                    deep: true,
+                    // 可以通过'‘ 调用methods中的方法
+                    handler: 'testHandler'
+                }
+                
+            }
+        });
+
+    </script>
+</body>
+
+</html>

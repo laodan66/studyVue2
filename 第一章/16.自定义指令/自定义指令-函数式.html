@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../Vue/vue.js"></script>
+    <title>自定义指令</title>
+</head>
+
+<body>
+    <div id="root">
+        <h2>n的值是：{{n}}</h2>
+        <h2>n的值放大10倍：<span v-big="n"></span></h2>
+        <h2>n的值放大10倍：<span v-big-new="n"></span></h2>
+        <button @click="n++">点击n++</button>
+        <hr>
+        <input type="text" v-fbind:value="n">
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data: {
+            n: 1
+        },
+        // 指令与元素绑定成功时， 模板重新解析时被调用 如果是多个单词用 kebab-case命名方式 diretives中用引号包裹也可以用驼峰命名
+        directives: {
+            big(element, binding) {
+                element.textContent = binding.value * 10;
+            },
+            fbind: {
+                // 指令与元素绑定成功时
+                bind(element, binding) {
+                    element.value = binding.value;
+                },
+                // 元素插入到页面时调用
+                inserted(element, binding) {
+                    element.focus();
+                },
+                // 模板被重新解析时调用
+                update(element, binding) {
+                    element.value = binding.value;
+                }
+            },
+            bigNew(element, binding) {
+                console.log('kebaba-case命名法');
+                element.textContent = binding.value * 10;
+            }
+        }
+    });
+</script>
+
+</html>

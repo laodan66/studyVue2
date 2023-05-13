@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="root">
+        <h1>今天天气{{info}}</h1>
+        <!-- 可以写一些简单语句，但不要多 -->
+        <button @click="isHot = !isHot">点击切换天气</button>
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                isHot:true,
+            },
+            computed: { 
+                // 计算属性 显示isHot代表的中文
+                info() {
+                    return this.isHot == true ? '炎热' : '凉爽';
+                }
+            },
+            methods: {
+                // 方法:切换isHot的值
+                changeWeather() {
+                    this.isHot = !this.isHot;
+                },
+                log() {
+                    console.log('外挂实现methods中的方法添加进handler');
+                }
+            },
+            watch: {
+                // 当监视对象只有一个配置项时可以简写
+                // 额外添加的监听器中的immediate不会影响已经添加了的
+                isHot(newVal, oldVal) {
+                    console.log("监视器被执行了","新值为：" + newVal, "旧值为：" + oldVal);
+                }
+            }
+        });
+
+
+        // 另外一种形式的监听也可以简写 
+        vm.$watch('info', function(newVal, oldVal) {
+            console.log("info被改变", newVal, oldVal);
+        })
+        //必须有handler，否则报错,可以通过此方法持续添加handler
+        vm.$watch('isHot',{
+            immediate: true,
+            handler() {
+                console.log('111');
+            }
+        });
+        // 此种也可以
+        vm.$watch('isHot',{
+            handler:'log'
+        });
+    </script>
+</body>
+
+</html>

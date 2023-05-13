@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12.Vue绑定class</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<style>
+    .basic {
+        width: 400px;
+        height: 200px;
+        border: 1px solid black;
+    }
+
+    .happy {
+        background-image: linear-gradient(200deg, skyblue, rgb(255, 255, 157));
+    }
+
+    .sad {
+        background-color: darkgray;
+    }
+
+    .normal {
+        background-color: skyblue;
+    }
+
+    /* 文字 */
+    .text1 {
+        font-size: 40px;
+        text-align: center;
+        /* 行高等于div高度及垂直居中 */
+        line-height: 200px;
+    }
+
+    .text2 {
+        font-size: 80px;
+        color: aqua;
+        text-shadow: 2px 2px red, 4px 4px black;
+    }
+
+    .text3 {
+        font-size: 40px;
+        text-align: bottom;
+        border: 2px solid skyblue;
+        border-radius: 20px;
+    }
+
+    .p {
+        width: 400px;
+        height: 200px;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 200px;
+    }
+
+    .p2 {
+        font-size: 40px;
+        color: white;
+        margin-right: 2px;
+    }
+</style>
+
+<body>
+
+    <div id="root">
+        <!-- 绑定class样式的 字符串写法 适用于：要绑定样式名称不确定，需要动态指定 -->
+        <div class="basic" :class="mood" @click="changeMood">{{msg}}</div><br>
+        <!-- 动态指定 (样式名称不确定，需要动态指定)-->
+        <div class="basic" :class="text" @click="changeMoodRandom">{{msg}}</div><br><br>
+
+        <hr>
+        <!-- 绑定class样式的 数组写法 适用于：要绑定的样式名称不确定，且个数不确定 -->
+        <div class="basic" :class="classArr">{{msg}}</div>
+
+        <!-- 绑定class样式的 对象写法 适用于：要绑定的样式名字确定，个数确定，动态决定用不用 -->
+        <div class="basic" :class="classState">{{msg}}</div><br><br><br><br>
+
+        <hr>
+        <!-- 绑定内联样式（style） 对象式写法固定不推荐使用-->
+        <div class="basic" :style="{fontSize:50+'px'}">{{msg}}</div><br><br>
+        <!-- 绑定内联样式（style） 对象式写法 也让对象中包括多个对象-->
+        <div class="basic" :style="styleObj">{{msg}}</div><br><br>
+        <!-- 绑定内联样式（style） 数组写法 数组内为多个样式对象-->
+        <div class="basic" :style="[styleObj, styleObj2]">{{msg}}</div><br><br>
+
+        <div class="p">
+            <div class="p2">{{name}}</div>
+            <!-- 绑定内联样式（style） 数组写法 数组内为多个样式对象-->
+            <div class="basic" :style="[styleObj, styleObj2]">{{msg}}</div><br><br>
+        </div>
+
+    </div>
+
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                msg: 'LBWNB',
+                name: '卢本伟',
+                mood: 'normal',
+                text: 'text1',
+                classArr: ['text1', 'text2', 'text3'],
+                classState: {
+                    text1: false,
+                    text2: false
+                },
+                styleObj: { // key为css样式且命名方式为驼峰式
+                    fontSize: '40px',
+                    width: '175px',
+                    height: '70px',
+                    fontWeight: '900',
+                    textAlign: 'center',
+                    lineHeight: '70px',
+                    backgroundColor: 'orange'
+                },
+                styleObj2: { // key为css样式且命名方式为驼峰式
+                    border: '1px orange solid',
+                    borderRadius: '20px'
+                }
+            },
+            methods: {
+                changeMood(e) {
+                    this.mood = 'happy';
+                    console.log(e.target.className); // basic normal
+                },
+                changeMoodRandom(e) {
+                    const arr = ['text1', 'text2', 'text3'];
+                    // 随机三以内的整数 作为数组的index
+                    this.text = arr[Math.floor(Math.random() * 3)]
+                    console.log(e.target.className);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

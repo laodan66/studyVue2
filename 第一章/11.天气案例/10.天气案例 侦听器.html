@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="root">
+        <h1>今天天气{{info}}</h1>
+        <!-- 可以写一些简单语句，但不要多 -->
+        <button @click="isHot = !isHot">点击切换天气</button>
+        <!-- <button @click="changeWeather">点击切换天气</button> -->
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                isHot:true
+            },
+            computed: { 
+                // 计算属性 显示isHot代表的中文
+                info() {
+                    return this.isHot == true ? '炎热' : '凉爽';
+                }
+            },
+            methods: {
+                // 方法:切换isHot的值
+                changeWeather() {
+                    this.isHot = !this.isHot;
+                }
+            },
+            watch: {
+                // 侦听器 监听器 监听已存在的属性变化 变化后自动执行
+                isHot: {
+                    immediate: false, // 属性为布尔值，默认状态为false 即是否在初始化时调用handler
+                    handler(newValue, oldValue) {
+                        console.log("监视器被执行了","新值为：" + newValue, "旧值为：" + oldValue);
+                    }
+                }
+            }
+        });
+
+        // 当在创建Vue实例时不确定是否要监听 可以在后面写
+        // 监听属性名， 监听器的方法
+        vm.$watch('info', {
+            handler(newVal, oldVal) {
+                console.log("实例括号外监视器被执行了","新值为：" + newVal, "旧值为：" + oldVal);
+            }
+        })
+
+    </script>
+</body>
+
+</html>

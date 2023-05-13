@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="root">
+        <button v-on:click="showInfo1">点击我弹窗1</button>
+        <button @click="showInfo2(66, $event)">点击我弹窗2</button>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+
+            },
+            methods: {
+                showInfo1() {
+                    alert('第一个窗口的弹窗！');
+                },
+                showInfo2(num, event) {
+                    alert('第二个窗口的弹窗+' + num);
+                    console.log(event.target);// <button>点击我弹窗2</button>
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

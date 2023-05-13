@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue的模版语法</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 在更改vue容器中的数据时 v-bind不同步修改输入框内容 -->
+        单向数据绑定：<input type="text" v-bind:value="msg"><br />
+        <!-- 在更改vue容器中的数据时 v-module同步修改输入框内容 -->
+        双向数据绑定：<input type="text" v-model:value="msg">
+
+        <hr>
+        <!-- 简写 -->
+        <!--  由于v-model多用于与用户交互的组件中即表单，且只监听value的值因此可以简写成v-model（省略:value）-->
+        <!-- 在更改vue容器中的数据时 v-bind不同步修改输入框内容 -->
+        单向数据绑定：<input type="text" :value="msg"><br />
+        <!-- 在更改vue容器中的数据时 v-module同步修改输入框内容 -->
+        双向数据绑定：<input type="text" v-model="msg">
+    </div>
+
+    <script>
+        // 关闭成产环境的tip
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+                msg: ''
+            }
+        });
+
+    </script>
+</body>
+
+</html>

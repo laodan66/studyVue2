@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue的模版语法</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>Hello:{{name}}</h1>
+        <h3>当前时间:{{new Date().toLocaleString()}}</h3>
+        <hr>
+        <a v-bind:href="teacher.url">点击查看url</a>
+        <a :href="teacher.url">点击查看teacher姓名{{teacher.name}}</a>
+    </div>
+
+    <script>
+        // 关闭成产环境的tip
+        Vue.config.productionTip = false;
+
+        new Vue ({
+            el: '#root',
+            data: {
+                name: '张三',
+                teacher: {
+                    name: '罗翔',
+                    url: 'http://www.baidu.com/'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

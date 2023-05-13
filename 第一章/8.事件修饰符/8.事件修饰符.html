@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/Vue/vue.js"></script>
+    <style>
+        * {
+            margin-top: 20px;
+        }
+
+        .a_div {
+            width: 200px;
+            height: 200px;
+            background-color: blueviolet;
+            padding-top: 50px;
+        }
+
+        .div1 {
+            position: relative;
+            width: 200px;
+            height: 200px;
+
+            background-color: black;
+        }
+
+        .div2 {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 75px;
+            height: 75px;
+            background-color: white;
+        }
+
+        ul {
+            width: 200px;
+            height: 200px;
+            background-color: cadetblue;
+            /* 超出部分滚动 */
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root">
+        <a href="https://www.baidu.com" @click="showTip">点我弹出提示信息</a>
+        <hr>
+        <!-- 使用prevent阻止标签的默认事件 (常用) -->
+        <a href="https://www.baidu.com" @click.prevent="showTip2">点我弹出提示信息2</a>
+
+        <!-- 使用stop阻止事件的冒泡 (常用)-->
+        <div class="a_div" @click="showTip3()">
+            <button @click.stop="showTip4()">点击我演示阻止冒泡事件发生</button>
+        </div>
+        <!-- 使用once将事件设置为仅一次 -->
+        <button @click.once="showTip7">此按钮只能点击一次</button>
+
+        <!-- 使用capture将事件改为捕获模式 
+            当点击白色div时默认状态为冒泡事件即白--黑 
+            使用capture后改为捕获事件即黑-白
+            因capture为自上而下所以给白色div的父元素增加
+        -->
+        <div class="div1" @click.capture="showTip5">
+            <div class="div2" @click="showTip6"></div>
+        </div>
+
+        <!-- 使用scroll监听屏幕滚动 使用wheel监听滚轮滚动 -->
+        <!-- 在监听滚轮并指定函数时使用passive能让滚轮更流畅 注scroll不存在这个问题-->
+        <ul @scroll="demo()">
+        <!-- <ul @wheel="demo2()"> -->
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+        </ul>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+
+            },
+            methods: {
+                showTip() {
+                    alert('这是一条提示信息,提示信息过后跳转到a标签所指定的网页');
+                },
+                showTip2() {
+                    alert('这是一条提示信息，但是通过@click.prevent阻止了a标签的默认事件');
+                },
+                showTip3() {
+                    alert('这是一条提示，因为按钮父元素div也拥有点击事件，所以会造成冒泡事件,对按钮使用@click.stop取消');
+                },
+                showTip4() {
+                    alert('点击了按钮');
+                    console.log('此事件分为两种，一种为冒泡事件及自下而上触发， 另一种为捕获事件，即自上而下触发');
+                },
+                showTip5() {
+                    alert('黑色div');
+                },
+                showTip6() {
+                    alert('白色div');
+                },
+                showTip7() {
+                    alert('这是一个只能出现一次的提示')
+                },
+                demo() {
+                    // scroll 监听的是屏幕的滚动
+                    console.log('窗口滚动了');
+                },
+                demo2() {
+                    // wheel 监听的是滚轮的滚动
+                    console.log('滚轮滚动了');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

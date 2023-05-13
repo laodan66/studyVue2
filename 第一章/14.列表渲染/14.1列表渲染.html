@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 使用v-for遍历 支持 对象 数组 字符串 和指定次数 
+            (item, index) in/of items :key(唯一值用于crud 有id优先id无id用index)
+        -->
+        <h1>遍历数组</h1>
+        <ul>
+            <li v-for="person in people" :key="person.id">
+                姓名:{{person.name}}----年龄:{{person.age}}
+            </li>
+        </ul>
+
+        <h1>遍历对象(属性名为key，值为value)</h1>
+        <ul>
+            <li v-for="(value, key) in person" :key="key">
+                key:{{key}}----value:{{value}}
+            </li>
+        </ul>
+
+        <h1>遍历字符串</h1>
+        <ul>
+            <li v-for="(char, index) in str" :key="index">
+                index:{{index}}----char:{{char}}
+            </li>
+        </ul>
+
+        <h1>遍历指定次数</h1>
+        <ul>
+            <li v-for="(number, index) in 10" :key="index">
+                下标:{{index}}----值:{{number}}
+            </li>
+        </ul>
+
+    </div>
+
+
+    <script>
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+                people: [
+                    { id: '001', name: '张三', age: '19' },
+                    { id: '002', name: '李四', age: '20' },
+                    { id: '003', name: '王五', age: '99' },
+                ],
+                person: {
+                    name: '法外狂徒',
+                    price: '6300蓝色精粹'
+                },
+                str: 'hello',
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 键盘事件 -->
+    <!-- vue中默认定义好的按键 
+        .enter
+        .tab
+        .delete(捕获“删除”和“退格”键)
+        .esc
+        .space
+        .up
+        .down
+        .left
+        .right
+    -->
+
+    <!-- 通过config.keyCodes.[自定义键名] = xx 来自定义按键修饰符别名 -->
+    <!-- 系统修饰符为 .ctrl .alt .shift .meta(win/command) 
+        系统修饰符在.keyup下需要配合其他按键的释放才能生效，且不顶替系统按键的默认效果
+    -->
+
+    <!-- .exact修饰符允许控制由[精确的系统修饰符]组合触发的事件 
+        有且只有 Ctrl 被按下的时候才触发:click.ctrl.exact
+        没有任何系统修饰符被按下的时候才触发:click.exact
+    -->
+
+    <!-- 鼠标按键修饰符 .click
+        .left
+        .right
+        .middle
+    -->
+
+    <div id="root">
+        <!-- 监听鼠标右键并关闭默认事件 -->
+        <button @click.right.prevent="showLog">监听鼠标右键</button>
+        <!-- 监听鼠标中键 -->
+        <button @click.middle="showLog">监听鼠标中键</button>
+
+        <!-- 尽显系统控制符的组合 -->
+        <button @click.shift.exact="showLog">测试exact</button>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+
+            },
+            methods: {
+                showLog(e) {
+                    console.log('Tip:' + e.target.innerHTML);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

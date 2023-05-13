@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期例子</title>
+    <script src="../../Vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2 :style="{opacity}">Vue的生命周期</h2>
+    </div>
+
+
+    <script>
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+                opacity: 1
+            },
+            mounted() {
+                console.log('在vue加载完真实DOM(放入页面后)后执行mounted函数向页面挂载mounted函数中的内容');
+                setInterval(() => {
+                    if(this.opacity <= 0) {
+                        this.opacity = 1;
+                    }
+                    this.opacity -= 0.01;
+                }, 16);
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/Vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 这个被称为view即dom -->
+    <div id="root">
+        <h1>{{msg}}</h1>
+    </div>
+
+    <script>
+        new Vue({ // 此实例对象被称为viewModel
+            el: '#root',
+            data: {
+                msg: 'data被称为model'
+            }
+        });
+    </script>
+</body>
+
+</html>
